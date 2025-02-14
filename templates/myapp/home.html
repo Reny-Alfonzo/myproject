@@ -1,0 +1,29 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="text-center mb-4">Bienvenido a mi sitio web</h1>
+
+        <!-- Botón para crear una nueva entrada con ícono -->
+        <div class="text-center mb-4">
+            <a href="{% url 'text_content_create' %}" class="btn btn-custom">
+                <i class="bi bi-plus-circle"></i> Crear nueva entrada
+            </a>
+        </div>
+
+        <h2 class="mb-3">Contenidos de texto</h2>
+        <div class="list-group">
+            {% for content in text_contents %}
+                <a href="{% url 'text_content_detail' content.pk %}" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ content.title }}</h5>
+                    <small class="text-muted">Tipo: {{ content.get_content_type_display }}</small><br>
+                    <small class="text-muted">Fecha de creación: {{ content.created_at }}</small>
+                </a>
+            {% empty %}
+                <p class="text-muted">No hay contenidos disponibles.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

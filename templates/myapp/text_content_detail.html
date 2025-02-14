@@ -1,0 +1,70 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <!-- Botón para editar la entrada -->
+        <div class="text-end mb-3">
+            <a href="{% url 'text_content_edit' text_content.pk %}" class="btn btn-warning">
+                <i class="bi bi-pencil"></i> Editar entrada
+            </a>
+        </div>
+
+        <h1 class="mb-4">{{ text_content.title }}</h1>
+        <!-- Mostrar la imagen si existe -->
+        {% if text_content.image %}
+            <img src="{{ text_content.image.url }}" alt="{{ text_content.title }}" class="img-fluid mb-4">
+        {% endif %}
+
+        <!-- Mostrar el video si existe -->
+        {% if text_content.video %}
+            <video controls class="mb-4" style="width: 100%;">
+                <source src="{{ text_content.video.url }}" type="video/mp4">
+                Tu navegador no soporta la reproducción de videos.
+            </video>
+        {% endif %}
+        <!-- Mostrar el video si existe -->
+        {% if text_content.video_url %}
+            <div class="embed-responsive embed-responsive-16by9 mb-4">
+                <iframe class="embed-responsive-item" src="{{ text_content.video_url }}" allowfullscreen></iframe>
+            </div>
+        {% endif %}
+
+        <p class="lead">{{ text_content.content }}</p>
+        <p><strong>Tipo:</strong> {{ text_content.get_content_type_display }}</p>
+        <p><strong>Creado el:</strong> {{ text_content.created_at }}</p>
+        <p><strong>Actualizado el:</strong> {{ text_content.updated_at }}</p>
+
+        <!-- Comentarios -->
+        <h2 class="mt-5">Comentarios</h2>
+        <div class="comments-section" style="max-height: 300px; overflow-y: auto;">
+            {% for comment in comments %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ comment.author }}</h5>
+                        <p class="card-text">{{ comment.text }}</p>
+                        <small class="text-muted">{{ comment.created_at }}</small>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">No hay comentarios aún.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Formulario para agregar comentarios -->
+        <h2 class="mt-3">Agregar un comentario</h2>
+        <form method="post" class="mb-5">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_author" class="form-label">Autor</label>
+                <input type="text" name="author" class="form-control" id="id_author" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_text" class="form-label">Comentario</label>
+                <textarea name="text" class="form-control" id="id_text" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

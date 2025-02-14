@@ -1,0 +1,91 @@
+/* static/myapp/css/styles.css */
+
+/* Variables para el tema claro (por defecto) */
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --card-background: #f8f9fa;
+    --card-border: #dee2e6;
+    --btn-primary-bg: #007bff;
+    --btn-primary-text: #ffffff;
+    --navbar-bg: #343a40; /* Color de fondo de la barra de navegación */
+    --navbar-text: #ffffff; /* Color del texto de la barra de navegación */
+    --btn-custom-bg: #ff6f61; /* Color de fondo personalizado para botones */
+    --btn-custom-text: #8cf949; /* Color del texto para botones personalizados */
+    --btn-custom-hover-bg: #e65a50; /* Color de fondo al pasar el mouse */
+    --btn-custom-hover-text: #ffffff; /* Color del texto al pasar el mouse */
+}
+
+/* Variables para el tema oscuro */
+[data-theme="dark"] {
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --card-background: #1e1e1e;
+    --card-border: #333333;
+    --btn-primary-bg: #0d6efd;
+    --btn-primary-text: #ffffff;
+    --navbar-bg: #1a1a1a; /* Color de fondo de la barra de navegación en tema oscuro */
+    --navbar-text: #ffffff; /* Color del texto de la barra de navegación en tema oscuro */
+    --btn-custom-bg: #ff6f61; /* Mantener el color de fondo personalizado */
+    --btn-custom-text: #8cf949; /* Mantener el color del texto personalizado */
+    --btn-custom-hover-bg: #e65a50; /* Mantener el color de fondo al pasar el mouse */
+    --btn-custom-hover-text: #ffffff; /* Mantener el color del texto al pasar el mouse */
+}
+
+/* Aplicar estilos usando las variables */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.navbar {
+    background-color: var(--navbar-bg) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--navbar-text);
+}
+
+.card {
+    background-color: var(--card-background);
+    border-color: var(--card-border);
+}
+
+.btn-primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+}
+
+.btn-custom {
+    background-color: var(--btn-custom-bg);
+    border-color: var(--btn-custom-bg);
+    color: var(--btn-custom-text);
+    font-size: 1.2rem;
+    padding: 10px 20px;
+}
+
+.btn-custom:hover {
+    background-color: var(--btn-custom-hover-bg);
+    border-color: var(--btn-custom-hover-bg);
+    color: var(--btn-custom-hover-text);
+}
+
+/* Estilos para el botón de alternar tema */
+.theme-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50%; /* Botón circular */
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

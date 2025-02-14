@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Sitio Web</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Archivo CSS personalizado -->
+    <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Mi Sitio Web</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}
+        <!-- El contenido de las páginas se insertará aquí -->
+        {% endblock %}
+    </div>
+
+    <!-- Botón para alternar tema -->
+    <button class="theme-toggle-btn" onclick="toggleTheme()">
+        <i class="bi bi-moon"></i> Tema oscuro
+    </button>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript para alternar tema -->
+    <script>
+        // Función para alternar entre tema claro y oscuro
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+            const isDark = body.getAttribute('data-theme') === 'dark';
+
+            if (isDark) {
+                body.removeAttribute('data-theme');
+                themeToggleBtn.innerHTML = '<i class="bi bi-moon"></i> Tema oscuro';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="bi bi-sun"></i> Tema claro';
+            }
+
+            // Guardar la preferencia del usuario en localStorage
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        }
+
+        // Cargar el tema guardado al cargar la página
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const body = document.body;
+            const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+
+            if (savedTheme === 'dark') {
+                body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="bi bi-sun"></i> Tema claro';
+            } else {
+                body.removeAttribute('data-theme');
+                themeToggleBtn.innerHTML = '<i class="bi bi-moon"></i> Tema oscuro';
+            }
+        }
+
+        // Cargar el tema al iniciar la página
+        loadTheme();
+    </script>
+</body>
+</html>

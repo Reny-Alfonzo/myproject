@@ -1,0 +1,50 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="mb-4">{% if form.instance.pk %}Editar{% else %}Crear{% endif %} Artículo</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_title" class="form-label">Título</label>
+                <input type="text" name="title" class="form-control" id="id_title" value="{{ form.title.value|default:'' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_content" class="form-label">Contenido</label>
+                <textarea name="content" class="form-control" id="id_content" rows="5" required>{{ form.content.value|default:'' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="id_content_type" class="form-label">Tipo de contenido</label>
+                <select name="content_type" class="form-select" id="id_content_type" required>
+                    {% for value, label in form.content_type.field.choices %}
+                        <option value="{{ value }}" {% if form.content_type.value == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        <!-- Campo para la imagen -->
+            <div class="mb-3">
+                <label for="id_image" class="form-label">Imagen</label>
+                <input type="file" name="image" class="form-control" id="id_image">
+                {% if form.instance.image %}
+                    <small class="text-muted">Imagen actual: <a href="{{ form.instance.image.url }}" target="_blank">{{ form.instance.image.name }}</a></small>
+                {% endif %}
+            </div>
+        <!-- Campo para el video -->
+            <div class="mb-3">
+                <label for="id_video" class="form-label">Video</label>
+                <input type="file" name="video" class="form-control" id="id_video">
+                {% if form.instance.video %}
+                    <small class="text-muted">Video actual: <a href="{{ form.instance.video.url }}" target="_blank">{{ form.instance.video.name }}</a></small>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="id_video_url" class="form-label">URL del video (YouTube, Vimeo, etc.)</label>
+                <input type="url" name="video_url" class="form-control" id="id_video_url" value="{{ form.video_url.value|default:'' }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
